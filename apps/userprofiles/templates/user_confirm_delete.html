@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Eliminar usuario</title>
+</head>
+<body>
+	<form action="" method="post">
+      {% csrf_token %}
+      <p>Seguro que desea eliminar el <strong>{{ object }}</strong>?</p>
+      <a href="javascript:history.back()">Atrás</a>
+      <button type="submit">Eliminar</button>
+  </form>
+</body>
+</html>	

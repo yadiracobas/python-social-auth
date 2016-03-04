@@ -1,0 +1,36 @@
+<!DOCTYPE html lang="es">
+<html>
+<head>
+	<title>Lista de usuarios</title>
+</head>
+<body>
+<a href="/">Inicio</a>
+<a href="{% url 'userprofiles:user-add' %}">Crear cuenta</a>
+	<table>
+		<tr>
+			<th>nombre de usuario</th>
+			<th>Nombressss</th>
+			<th>Apellidos</th>
+			<th>Correo electrónico</th>
+			<th>Género</th>
+			<th>Detalles</th>
+			<th>Modificar</th>
+			<th>Eliminar</th>
+		</tr>
+		<tbody>		
+			{% for user in object_list %}
+				<tr>
+					<td>{{user.username}}</td>
+					<td>{{ user.first_name }}</td>
+					<td>{{ user.last_name }} {{ user.last_mom_name }}</td>
+					<td>{{ user.email }}</td>
+					<td>{{ user.gender}}</td>
+					<td><a href="{% url 'userprofiles:user-detail' user.id %}">Detalles</a></td>
+					<td><a href="{% url 'userprofiles:user-update' user.id %}">Modificar</a></td>
+					<td><a href="{% url 'userprofiles:user-delete' user.id %}">Eliminar</a></td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+</body>
+</html>

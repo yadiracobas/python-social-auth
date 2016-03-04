@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Crear nueva cuenta</title>
+</head>
+<body>
+	<a href="/">Inicio</a>
+	<form action="" method="post">{% csrf_token %}
+		{% for field in form %}
+	        <p class="form-group">
+	        	{{ field.errors }}
+	            {{ field.label_tag }} {{ field }}
+	            {{ field.help_text|safe }}
+	        </p>
+	    {% endfor %}
+	   	<input type="submit" value="Guardar" />
+	</form>
+</body>
+</html>
