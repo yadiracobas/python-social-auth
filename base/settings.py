@@ -27,7 +27,6 @@ THIRD_PARTY_APPS = (
 
 LOCAL_APPS = (
                 'userprofiles',
-                'social_auth',
             )
 
 INSTALLED_APPS = DJANGO_APPS +  LOCAL_APPS + THIRD_PARTY_APPS
