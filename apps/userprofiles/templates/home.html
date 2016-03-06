@@ -1,41 +1,5 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Django Social App</title>
-</head>
-<body>
-	<script>
-        window.fbAsyncInit = function() {
-          FB.init({
-            appId      : '1687750374844001',
-            xfbml      : true,
-            version    : 'v2.5'
-          });
-        };
-
-        (function(d, s, id){
-           var js, fjs = d.getElementsByTagName(s)[0];
-           if (d.getElementById(id)) {return;}
-           js = d.createElement(s); js.id = id;
-           js.src = "//connect.facebook.net/en_US/sdk.js";
-           fjs.parentNode.insertBefore(js, fjs);
-         }(document, 'script', 'facebook-jssdk'));
-    </script>
-
-	{% if user.is_authenticated %}
-		<p align="right">
-			<strong>Usuario:</strong> {{ user.first_name }}
-		<a href="{% url 'userprofiles:signout' %}">Salir</a>
-		</p>
-	{% else %}
-		<a href="/users/login/">Iniciar sesión</a>
-		<a href="{% url 'social:begin' 'twitter' %}?next={{ request.path }}">Login with Twitter</a>
-		<a href="{% url 'social:begin' 'facebook' %}?next={{ request.path }}">Login with Facebook</a>
-		 <a href="{% url 'social:begin' 'google-oauth2' %}?next={{ request.path }}">Login with Google</a>
-	{% endif %}
-
-	<a href="{% url 'userprofiles:user-add' %}">Crear cuenta</a>
-	<a href="/users/user_list/">Listar usuarios</a>
-	<a href="/admin/">Administración del sitio</a>
-</body>
-</html>
+{% extends 'base.html'%}
+{% block content %}
+<a name="fb_share" type="button" share_url="/users/user_list/">Compartir</a> 
+<script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script>
+{% endblock %}

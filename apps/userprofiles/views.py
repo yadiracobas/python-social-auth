@@ -51,25 +51,30 @@ def signout(request):
 """
 class UserList(ListView):
     model = User
+    template_name = 'user_list.html'
 
 class UserDetail(DetailView):
 	model = User
+	template_name = 'user_detail.html'
 
 class UserCreate(CreateView):
     model = User
+    template_name = 'user_form.html'
     form_class = UserForm
-    success_url = reverse_lazy('userprofiles:lista_usuarios')
+    success_url = reverse_lazy('userprofiles:user_list')
 
 class UserUpdate(UpdateView):
     model = User
+    template_name = 'user_form.html'
     fields = ['username', 'first_name', 'last_name',
     			'last_mom_name', 'gender', 'mobile_no',
     			'date_of_birth', 'avatar', ]
-    success_url = reverse_lazy('userprofiles:lista_usuarios')
+    success_url = reverse_lazy('userprofiles:user_list')
 
 class UserDelete(DeleteView):
     model = User
-    success_url = reverse_lazy('userprofiles:lista_usuarios')
+    template_name = 'user_confirm_delete.html'
+    success_url = reverse_lazy('userprofiles:user_list')
 
 
 

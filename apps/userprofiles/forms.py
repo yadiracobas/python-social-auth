@@ -2,7 +2,7 @@
 from django import forms
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from django.contrib.auth.models import Group, Permission
-from models import User
+from models import *
 
 class UserChangeForm(forms.ModelForm):
     password = ReadOnlyPasswordHashField()
@@ -17,54 +17,57 @@ class UserChangeForm(forms.ModelForm):
 
 class UserForm(forms.ModelForm):
 
-	username = forms.CharField(label= '', 
+	username = forms.CharField(label= 'Nombre de usuario *', 
 								widget=forms.TextInput(
-													attrs={'class' : 'form-control', 
-															'placeholder': 'Nombre de usuario *'}))
+													attrs={'class' : 'form-control',															
+															'autofocus': 'autofocus',
+															'required': 'required',}))
 	
-	email = forms.EmailField(label = '',
+	email = forms.EmailField(label = 'Correo electrónico',
 							widget=forms.TextInput(
 													attrs={'class' : 'form-control', 
-															'placeholder':'Correo electrónico *'}))
+															'required': 'required',
+															'type': 'email'}))
 	
-	password_one = forms.CharField(label= '',
+	password_one = forms.CharField(label= 'Contraseña',
 									widget=forms.PasswordInput(
 															render_value=False, 
 															attrs={'class' : 'form-control',
-																	'placeholder': 'Contraseña *'}))
+																	'required':'required',
+																	'type': 'password'}))
 	
-	password_two = forms.CharField(label= '',
+	password_two = forms.CharField(label= 'Repetir contraseña',
 									widget=forms.PasswordInput(
 															render_value=False, 
 															attrs={'class' : 'form-control',
-															'placeholder': 'Repetir contraseña *'}))
+															'required':'required',
+															'type': 'password'}))
 	
-	first_name = forms.CharField(label= '',
+	first_name = forms.CharField(label= 'Nombre',
 								widget=forms.TextInput(
 														attrs={'class' : 'form-control',
-														'placeholder': 'Nombre *'}))
+																'required': 'required'}))
 	
-	last_name = forms.CharField(label= '',
+	last_name = forms.CharField(label= 'Primer apellido',
 								widget=forms.TextInput(
 														attrs={'class' : 'form-control',
-														'placeholder':'Apellido paterno *'}))
+														'required': 'required'}))
 	
-	last_mom_name = forms.CharField(label= '',
+	last_mom_name = forms.CharField(label= 'Segundo apellido',
 									required = False, 
 									widget=forms.TextInput(
 															attrs={'class' : 'form-control',
-															'placeholder': 'Apellido materno'}))
+															}))
 	
-	gender_opts = ( ('M', 'Masculino'), ('F', 'Femenino'), )
-	gender = forms.CharField(label = 'Género',
+	gender = forms.ChoiceField(label = 'Sexo',
+							choices = User.gender_opts,
 							required = False,
-							widget=forms.Select(choices=gender_opts))
+							widget=forms.Select(attrs = {'class':'form-control'}))
 
 	mobile_no = forms.CharField(label = 'Número de teléfono',
 								required = False,
 								help_text = 'Debe incluir Número de ciudad y estado',
-								widget=forms.TextInput(attrs={'class' : 'form-control',
-															'placeholder': 'Teléfono',
+								widget=forms.TextInput(attrs={'class' : 'form-control',															
 															'type': 'number',}))
 	
 	date_of_birth = forms.DateField(label = 'Fecha de nacimiento',
@@ -150,12 +153,15 @@ class SigninUserForm(forms.ModelForm):
 	username = forms.CharField(label= '', 
 								widget=forms.TextInput(
 													attrs={'class' : 'form-control', 
-															'placeholder': 'Nombre de usuario *'}))
+															'placeholder': 'Nombre de usuario *',
+															'required': 'required',
+															'autofocus': 'autofocus'}))
 	password = forms.CharField(label= '',
 									widget=forms.PasswordInput(
 															render_value=False, 
 															attrs={'class' : 'form-control',
-																	'placeholder': 'Contraseña *'}))
+																	'placeholder': 'Contraseña *',
+																	'type': 'password'}))
 	class Meta:
 		model = User
 		fields = ('username', 'password',)

@@ -1,19 +1,35 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Iniciar sesión</title>
-</head>
-<body>
-	{{ errors }}
-	<form action="" method="post">{% csrf_token %}
-		{% for field in form %}
-	        <p class="form-group">
-	        	{{ field.errors }}
-	            {{ field.label_tag }} {{ field }}
-	            {{ field.help_text|safe }}
-	        </p>
-	    {% endfor %}
-	   	<input type="submit" value="Guardar" />
-	</form>
-</body>
-</html>
+{% extends 'base.html'%}
+{% load staticfiles %}
+{% block title %} Iniciar sesión {% endblock %}
+{% block header %} 
+<link rel="stylesheet" href="{% static "css/signin.css" %}">
+<link rel="stylesheet" href="{% static "css/imgs.css" %}">
+{% endblock %}
+{% block content %}
+<div class="container">
+	{% if not user.is_authenticated %}
+		<form action="" method="post" class="form-signin">{% csrf_token %}
+			<h2 class="form-signin-heading">Inicia sessión</h2>
+			<div class="social_icons ">
+				<a href="{% url 'social:begin' 'twitter' %}?next={{ request.path }}"><img src="{% static "img/twiiter.png" %}" alt=""></a>
+				<a href="{% url 'social:begin' 'facebook' %}?next={{ request.path }}"><img src="{% static "img/facebook.png" %}" alt=""></a>
+			 	<a href="{% url 'social:begin' 'google-oauth2' %}?next={{ request.path }}"><img src="{% static "img/google.png" %}" alt=""></a>
+			</div>	
+			{% if errors %}
+				<div class="alert alert-danger" role="alert">
+		    		<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+				  	<span class="sr-only">Error:</span>
+				  	{{ errors }}
+				</div>
+			{% endif %}
+			{% for field in form %}
+		        <p class="form-group">		        	
+		            {{ field.label_tag }} {{ field }}
+		            {{ field.help_text|safe }}
+		        </p>
+		    {% endfor %}
+		   	<input type="submit" value="Iniciar sesión" class="btn btn-primary btn-block"/>
+		</form>
+	{% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	{% load staticfiles %}
+	<title>{% block title %} Cobas Social Profiles {% endblock %}</title>
+	<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap -->
+    <link href="{% static "css/bootstrap.min.css" %}" rel="stylesheet">
+    {% block header %} {% endblock %} 
+</head>
+<body>
+	{% block menu %}
+		<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	    <!-- Include all compiled plugins (below), or include individual files as needed -->
+	    <script src="{% static "js/bootstrap.min.js" %}"></script>
+		
+		<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/">Inicio</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li><a href="/users/user_list/">Listar usuarios</a></li>
+        {% if user.is_staff %}
+			<li><a href="/admin/">Administración del sitio</a></li>
+		{% endif %}
+	</ul>
+	<ul class="nav navbar-nav navbar-right">
+    <li>
+      <a href="{% url 'userprofiles:user-add' %}">Crear cuenta</a>
+    </li>
+		{% if user.is_authenticated %}
+			<li>
+				<strong>Usuario:</strong> {{ user.first_name }}
+			<a href="{% url 'userprofiles:signout' %}">Salir</a>
+			</li>
+		{% else %}
+			<li><a href="/users/login/">Iniciar sesión</a></li>
+			<li><a href="{% url 'social:begin' 'twitter' %}?next={{ request.path }}"><img src="{% static "img/twitter1.png" %}" alt="" width="33px"></a></li>
+			<li><a href="{% url 'social:begin' 'facebook' %}?next={{ request.path }}"><img src="{% static "img/Icono_Facebook.png"%}" alt="" style="width:30px;"></a></li>
+			 <li><a href="{% url 'social:begin' 'google-oauth2' %}?next={{ request.path }}"><img src="{% static "img/icono google.png"%}" alt="" width="36px" ></a></li>
+		{% endif %}
+	</ul>      
+    </div>
+  </div>
+</nav>
+
+
+
+
+
+
+		
+
+		
+		
+	{% endblock %} 
+
+	{% block content %}
+		<p>Bienvenido a mi sitio</p>
+	{% endblock %}
+	{% block scripts %}
+		<script>
+        window.fbAsyncInit = function() {
+          FB.init({
+            appId      : '1687750374844001',
+            xfbml      : true,
+            version    : 'v2.5'
+          });
+        };
+
+        (function(d, s, id){
+           var js, fjs = d.getElementsByTagName(s)[0];
+           if (d.getElementById(id)) {return;}
+           js = d.createElement(s); js.id = id;
+           js.src = "//connect.facebook.net/en_US/sdk.js";
+           fjs.parentNode.insertBefore(js, fjs);
+         }(document, 'script', 'facebook-jssdk'));
+    </script>
+	{% endblock %}
+</body>
+</html>

@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %} Registro de usuario {% endblock %}
+{% block header %}
+	<link href="{% static "css/forms.css" %}" rel="stylesheet">
+{% endblock %}
+{% block content %}
+<div class="container">
+	<form action="" method="post" class="register-form">{% csrf_token %}
+		{% for field in form %}
+	        <p class="form-group">
+	        	{% if field.errors %}
+		        	<div class="alert alert-danger" role="alert">
+		        		<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+					  	<span class="sr-only">Error:</span>
+					  	{{ field.errors }}
+					</div>
+				{% endif %}
+	            {{ field.label_tag }} {{ field }}
+	            <p class="help-block">{{ field.help_text|safe }}</p>
+	        </p>
+	    {% endfor %}
+	   	<input type="submit" value="Guardar" class="btn btn-lg btn-primary btn-block"/>
+	</form>
+</div>
+{% endblock %}

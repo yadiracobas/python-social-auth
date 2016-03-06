@@ -1,15 +1,15 @@
-<!DOCTYPE html lang="es">
-<html>
-<head>
-	<title>Lista de usuarios</title>
-</head>
-<body>
-<a href="/">Inicio</a>
-<a href="{% url 'userprofiles:user-add' %}">Crear cuenta</a>
-	<table>
+{% extends 'base.html'%}
+{% load staticfiles %}
+{% block header %}
+	<link rel="stylesheet" href="{% static "css/tables.css" %}">
+{% endblock %}
+{% block content %}
+<div class="panel panel-default">
+	<div class="panel-heading">Listado de usuarios</div>
+	<table class="table">
 		<tr>
-			<th>nombre de usuario</th>
-			<th>Nombressss</th>
+			<th>Usuario</th>
+			<th>Nombres</th>
 			<th>Apellidos</th>
 			<th>Correo electrónico</th>
 			<th>Género</th>
@@ -17,7 +17,7 @@
 			<th>Modificar</th>
 			<th>Eliminar</th>
 		</tr>
-		<tbody>		
+		<tbody>
 			{% for user in object_list %}
 				<tr>
 					<td>{{user.username}}</td>
@@ -32,5 +32,5 @@
 			{% endfor %}
 		</tbody>
 	</table>
-</body>
-</html>
+</div>
+{% endblock %}
