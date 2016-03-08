@@ -10,4 +10,5 @@ urlpatterns = [
     url(r'user/add/$', UserCreate.as_view(), name='user-add'),
     url(r'user/(?P<pk>[0-9]+)/$', UserUpdate.as_view(), name='user-update'),
     url(r'user/(?P<pk>[0-9]+)/delete/$', UserDelete.as_view(), name='user-delete'),
+    url(r'^contact/$', views.contact_view, name = 'contact'),
 ]

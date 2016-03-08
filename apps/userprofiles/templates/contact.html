@@ -1,0 +1,27 @@
+{% extends 'base.html'%}
+{% block title %} Contacto {% endblock %}
+{% load staticfiles %}
+{% block header %} 
+<link rel="stylesheet" href="{% static "css/signin.css" %}">
+{% endblock %}
+{% block content %}
+<div class="container">
+	<form action="" method="post" class="form-signin">{% csrf_token %}
+		<h2 class="form-signin-heading">Contacto</h2>
+		{% if error %}
+			<div class="alert alert-danger" role="alert">
+	    		<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+			  	<span class="sr-only">Error:</span>
+			  	{{ error }}
+			</div>
+		{% endif %}
+		{% if msg %}
+			<div class="alert alert-success" role="alert">
+			  <a href="#" class="alert-link">{{ msg }}</a>
+			</div>
+		{% endif %}
+		{{contactForm.as_p}}
+		<input type="submit" value="Enviar" class="btn btn-lg btn-primary btn-block"/>
+	</form>
+</div>
+{% endblock %}

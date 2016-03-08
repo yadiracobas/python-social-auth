@@ -1,11 +1,14 @@
 # -*- coding: utf-8 -*-
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.core.urlresolvers import reverse
+from django.contrib import messages
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.core.urlresolvers import reverse_lazy
 from django.template import RequestContext
 from django.contrib.auth import login, logout, authenticate
 from django.http import HttpResponseRedirect, HttpResponse
+from django.core.mail import send_mail
 from forms import *
 
 
@@ -34,7 +37,8 @@ def user_login(request):
 
 def signout(request):
     logout(request)
-    return HttpResponseRedirect('/')
+    messages.success(request, 'Se ha desconectado con éxito.')
+    return redirect(reverse('home'))
 
 """
 -por defecto el nombre del listado es object_list,
@@ -65,10 +69,12 @@ class UserCreate(CreateView):
 
 class UserUpdate(UpdateView):
     model = User
-    template_name = 'user_form.html'
+    template_name = 'user_update_form.html'
     fields = ['username', 'first_name', 'last_name',
     			'last_mom_name', 'gender', 'mobile_no',
-    			'date_of_birth', 'avatar', ]
+    			'date_of_birth', 'avatar', 'is_admin', 
+    			'is_active', 'is_superuser','groups', 
+    			'user_permissions']
     success_url = reverse_lazy('userprofiles:user_list')
 
 class UserDelete(DeleteView):
@@ -76,8 +82,31 @@ class UserDelete(DeleteView):
     template_name = 'user_confirm_delete.html'
     success_url = reverse_lazy('userprofiles:user_list')
 
+def contact_view(request):
 
-
+	msg = ''
+	error = ''
+	if request.method == 'POST':
+		contactForm = ContactForm(request.POST)
+		if contactForm.is_valid():
+			subject = request.POST.get('subject')
+			message = request.POST.get('message')
+			from_email = request.POST.get('email')
+			try:
+				send_mail(subject, message, from_email, ['django.cobas@gmail.com'])
+				msg = 'Gracias por contactar con nosotros. Enseguida atenderemos su solicitud'
+				contactForm = ContactForm()
+			except:
+				error = 'No se pudo enviar el correo electrónico'
+		else:
+			error = 'No se pudo enviar la información, revise los datos'
+	else:
+		contactForm = ContactForm()
+	
+	ctx = {'contactForm': contactForm,
+			'msg': msg,
+			'error': error,}
+	return render(request, 'contact.html', ctx)
 
 # def update_user_social_data(strategy, *args, **kwargs):
 #     """Set the name and avatar for a user only if is new.

@@ -165,3 +165,37 @@ class SigninUserForm(forms.ModelForm):
 	class Meta:
 		model = User
 		fields = ('username', 'password',)
+
+class ContactForm(forms.Form):
+    
+    contact_name = forms.CharField(required=False,
+    								label = 'Nombre',
+    								widget = forms.TextInput(
+    									attrs = {'class': 'form-control',
+    											'required': 'False',
+    											'autofocus': 'autofocus'}))
+
+    email = forms.EmailField(label = 'Correo electrónico',
+							widget=forms.TextInput(
+													attrs={'class' : 'form-control', 
+															'required': 'required',
+															'type': 'email',
+															'placeholder': 'usuario@ejemplo.com'}))
+	
+	
+    subject = forms.CharField(required=False,
+    							label = 'Asunto',
+    							widget = forms.TextInput(
+    									attrs = {
+    											'class': 'form-control',
+    											'required': 'False', 											
+    									}))
+
+    message = forms.CharField(required=True,
+    							label = 'Mensaje', 
+    							widget=forms.Textarea(
+    								attrs = {'class': 'form-control',
+    										'required': 'required',
+    										'rows': '8',
+    										'cols': '37',})
+    							)
