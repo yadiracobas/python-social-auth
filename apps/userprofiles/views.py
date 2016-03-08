@@ -2,6 +2,7 @@
 from django.shortcuts import render, redirect
 from django.core.urlresolvers import reverse
 from django.contrib import messages
+from django.contrib.auth.hashers import make_password
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.core.urlresolvers import reverse_lazy
@@ -107,6 +108,19 @@ def contact_view(request):
 			'msg': msg,
 			'error': error,}
 	return render(request, 'contact.html', ctx)
+
+def change_password(request):
+    if request.method == 'POST':
+        changePasswordForm = ChangePasswordForm(request.POST)
+        if changePasswordForm.is_valid():
+            request.user.password = make_password(changePasswordForm.cleaned_data['password'])
+            request.user.save()
+            messages.success(request, 'La contraseña se ha sido cambiado con exito!.')
+            return redirect(reverse('home'))
+    else:
+        changePasswordForm = ChangePasswordForm()
+    return render(request, 'change_password.html', {'changePasswordForm': changePasswordForm})
+
 
 # def update_user_social_data(strategy, *args, **kwargs):
 #     """Set the name and avatar for a user only if is new.

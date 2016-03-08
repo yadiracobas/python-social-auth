@@ -44,7 +44,9 @@
       <a href="{% url 'userprofiles:user-add' %}">Crear cuenta</a>
     </li>
 		{% if user.is_authenticated %}
-			<li>
+			
+      <li><a href="{% url 'userprofiles:change_password'%}">Cambiar contraseña</a></li>
+      <li>
       {% if user.avatar %}
         <img src="/{{user.avatar}}" alt="avatar">
       {% else %}
