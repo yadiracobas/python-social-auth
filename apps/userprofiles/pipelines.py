@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+from django.core.files.base import ContentFile
+from urllib import urlopen
 from .models import User 
 
 
@@ -28,12 +30,12 @@ def update_user_social_data(backend, strategy, *args, **kwargs):
         response =   kwargs['response']    
 
         if backend.name == 'facebook':
-        	if response['gender'] == 'mujer':
+            avatar = 'http://graph.facebook.com/{0}/picture'.format(response['id'])
+            if response['gender'] == 'mujer':
         		user.gender = 'F'
-        	else:
-        		user.gender = 'M'
-        	user.email = response['email']
-        	avatar = 'http://graph.facebook.com/{0}/picture'.format(response['id'])
+            else:
+                user.gender = 'M'
+            user.email = response['email']            
         
         if backend.name == 'google-oauth2':
         	details = kwargs['details']
@@ -48,4 +50,7 @@ def update_user_social_data(backend, strategy, *args, **kwargs):
         	user.email = kwargs['username'] + '@twitter.com'
         	avatar = kwargs['response']['profile_image_url']
 
+        image_stream = urlopen(avatar)
+        image_name = 'avatar_%s.jpg' % user.username
+        user.avatar.save(image_name, ContentFile(image_stream.read()))
         user.save()

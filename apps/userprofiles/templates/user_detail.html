@@ -1,19 +1,15 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Detalles de usuario</title>
-</head>
-<body>
-	<a href="/">Inicio</a>
-	<a class="btn btn-default" href="javascript:history.back()">Back</a>
-	<p><strong>Nombre de usuario: </strong>{{user.username}}</p>
-	<p><strong>Nombre: </strong>{{user.first_name}}</p>
-	<p><strong>Apellidos: </strong>{{user.last_name}} {{user.last_mom_name}}</p>
-	<p><strong>Correo electrónico: </strong>{{user.email}}</p>
-	<p><strong>Género: </strong>{{user.gender}}</p>
-	<p><strong>No. telefónico: </strong>{{user.mobile_no}}</p>
-	<p><strong>Fecha de nacimiento: </strong>{{user.date_of_birth}}</p>
-	<p><strong>Imagen de perfil: </strong>{{user.avatar}}</p>
-	<a href="{% url 'userprofiles:user-update' user.id %}">Editar</a>
-</body>
-</html>
+{% extends 'base.html' %}
+{% block title %} Detalles {% endblock %}
+{% block content %}
+<a href="/">Inicio</a>
+<a class="btn btn-default" href="javascript:history.back()">Back</a>
+<p><strong>Nombre de usuario: </strong>{{user.username}}</p>
+<p><strong>Nombre: </strong>{{user.first_name}}</p>
+<p><strong>Apellidos: </strong>{{user.last_name}} {% if user.last_mom_name %}{{user.last_mom_name}} {% endif %}</p>
+<p><strong>Correo electrónico: </strong>{{user.email}}</p>
+<p><strong>Género: </strong>{{user.gender}}</p>
+<p><strong>No. telefónico: </strong>{% if user.mobile_no %} {{user.mobile_no}} {% endif %}</p>
+<p><strong>Fecha de nacimiento: </strong>{% if user.date_of_birth %} {{user.date_of_birth}} {% endif %}</p>
+<p><strong>Imagen de perfil: </strong><img src="/{{user.avatar}}" alt="avatar"></p>
+<a href="{% url 'userprofiles:user-update' user.id %}">Editar</a>
+{% endblock %}

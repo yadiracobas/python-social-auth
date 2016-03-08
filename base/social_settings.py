@@ -11,6 +11,8 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
 )
 
+SOCIAL_AUTH_NEW_ASSOCIATION_REDIRECT_URL = '/newly_assosiation/'
+
 SOCIAL_AUTH_PROTECTED_USER_FIELDS = ['email',]
 
 SOCIAL_AUTH_USERNAME_IS_FULL_EMAIL = True

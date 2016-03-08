@@ -44,7 +44,11 @@
     </li>
 		{% if user.is_authenticated %}
 			<li>
+      {% if user.avatar %}
+        <img src="/{{user.avatar}}" alt="avatar">
+      {% else %}
 				<strong>Usuario:</strong> {{ user.first_name }}
+      {% endif %}
 			<a href="{% url 'userprofiles:signout' %}">Salir</a>
 			</li>
 		{% else %}

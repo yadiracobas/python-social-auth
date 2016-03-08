@@ -5,7 +5,7 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.core.urlresolvers import reverse_lazy
 from django.template import RequestContext
 from django.contrib.auth import login, logout, authenticate
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from forms import *
 
 
@@ -75,9 +75,6 @@ class UserDelete(DeleteView):
     model = User
     template_name = 'user_confirm_delete.html'
     success_url = reverse_lazy('userprofiles:user_list')
-
-
-
 
 
 

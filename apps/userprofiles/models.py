@@ -63,7 +63,7 @@ class User(AbstractBaseUser):
     gender = models.CharField(verbose_name = 'Género', max_length = 1, choices=gender_opts, default='M')
     mobile_no = models.CharField(verbose_name = 'Teléfono', max_length = 25, blank = True, null = True)
     date_of_birth = models.DateField(verbose_name = 'Fecha de nacimiento', null = True, blank = True)
-    avatar = models.ImageField('Avatar', upload_to='/', null = True, blank = True)
+    avatar = models.ImageField('Avatar', upload_to='static/img/avatars', null = True, blank = True)
 
     # Additional Information
     created = models.DateTimeField(verbose_name = 'Creado', editable = False, auto_now_add = True)
